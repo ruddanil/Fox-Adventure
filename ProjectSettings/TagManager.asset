@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Collectable
+  - Enemy
+  - Wall
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Bg-sky
+    uniqueID: 4056235955
+    locked: 0
+  - name: Bg-mountain
+    uniqueID: 168816649
+    locked: 0
+  - name: Bg-walls
+    uniqueID: 2674937595
+    locked: 0
+  - name: Bg-elements
+    uniqueID: 2744088577
+    locked: 0
+  - name: Entity
+    uniqueID: 2051740715
+    locked: 0
+  - name: Fg
+    uniqueID: 2013909683
+    locked: 0
