@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb; //start variables
+    private Rigidbody2D rb; 
     private Animator anim;
     private Collider2D coll;
 
-    private enum State {idle, running, jumping, falling, hurt} //fsm
+    private enum State {idle, running, jumping, falling, hurt} //Типы 
     private State state = State.idle;
 
-    [SerializeField] private LayerMask ground; //глобальный доступ "инспектора"
+    [SerializeField] private LayerMask ground; 
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private int scoreGem = 0;
-    [SerializeField] private int scoreOpos = 0;
+    [SerializeField] private int scoreGem = 0; 
+    [SerializeField] private int scoreOpos = 0; 
     [SerializeField] private Text gemText;
     [SerializeField] private Text oposText;
     [SerializeField] private float hurtForce = 10f;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(state != State.hurt)
+        if(state != State.hurt) //Если персонаж не в анимации после получения урона - движения разблокированы
         {
             Movement();
         }
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerEnter2D (Collider2D collision)
     {
-        if(collision.tag == "Collectable")
+        if(collision.tag == "Collectable") //"Сбор" гемов 
         {
             Destroy(collision.gameObject);
             scoreGem += 1;
@@ -52,13 +52,13 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            if(state == State.falling) 
+            if(state == State.falling) //Если соприкосновение произошло в прыжке - враг уничтожается 
             {
                 Destroy(other.gameObject);
                 scoreOpos += 1;
                 oposText.text = scoreOpos.ToString();
             }
-            else
+            else //Иначе игрок получает "урон"
             {
                 state = State.hurt;
                 if(other.gameObject.transform.position.x > transform.position.x) // Враг справа, откидывает влево
@@ -95,23 +95,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void AnimationState()
+    private void AnimationState() //Переключение анимаций
     {
-        if (state == State.jumping)
+        if (state == State.jumping) //Из прыжка в падение
         {
             if (rb.velocity.y < .1f)
             {
                 state = State.falling;
             }
         }
-        else if (state == State.falling)
+        else if (state == State.falling) //Из падения в обычную
         {
             if (coll.IsTouchingLayers(ground))
             {
                 state = State.idle;
             }
         }
-        else if (state == State.hurt)
+        else if (state == State.hurt) 
         {
             if(Mathf.Abs(rb.velocity.x) < .1f)
             {

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChange : MonoBehaviour
+public class SceneChange : MonoBehaviour //Скрипт для завершения игры 
 {
-    [SerializeField] private string sceneName;
+    [SerializeField] private string sceneName; //Приватная, но настраиваемая в инспекторе переменная 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) //При соприкосновеннии с объектом загружается сцена
     {
         if (collision.gameObject.gameObject.tag == "Player")
         {

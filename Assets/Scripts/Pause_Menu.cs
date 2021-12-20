@@ -9,10 +9,9 @@ public class Pause_Menu : MonoBehaviour
 
     public GameObject pauseMenuUI;
 
-    // Update is called once per frame
-    void Update()
+    void Update() //Обновляется при каждом новом кадре
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)) //Постановка на паузу при нажатии Esc
         {
             if (GameIsPaused)
             {
@@ -25,28 +24,28 @@ public class Pause_Menu : MonoBehaviour
         }
     }
 
-    public void Resume()
+    public void Resume() //Продолжить
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
 
-    public void Pause()
+    public void Pause() //Пауза
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
 
-    public void LoadMenu()
+    public void LoadMenu() //Выход в главное меню
     {
         Debug.Log("Load");
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void QuitGame()
+    public void QuitGame() //Выход из игры
     {
         Debug.Log("Quit");
         Application.Quit();

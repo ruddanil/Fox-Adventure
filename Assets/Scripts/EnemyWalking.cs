@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWalking : MonoBehaviour
+public class EnemyWalking : MonoBehaviour //Логика передвижения противников
 {
     private Rigidbody2D rb;
     private Collider2D coll;
     
-    [SerializeField] private float leftCap;
-    [SerializeField] private float rightCap;
-    
-    [SerializeField] private float Speed = 5f;
+    [SerializeField] private float leftCap; //Левая граница передвижения
+    [SerializeField] private float rightCap; //Правая граница передвижения
+
+    [SerializeField] private float Speed = 5f; //Скорость передвижения
 
     private bool facingLeft = true;
 
@@ -22,19 +22,19 @@ public class EnemyWalking : MonoBehaviour
 
     private void Update()
     {
-        if(facingLeft)
+        if(facingLeft) //Повернут влево 
         {
-            if(transform.position.x > leftCap)
+            if(transform.position.x > leftCap) //Не достиг левой границы
             {
-                if(transform.localScale.x != 1)
+                if(transform.localScale.x != 1) //Направлен влево? 
                 {
-                    transform.localScale = new Vector3(1, 1);
+                    transform.localScale = new Vector3(1, 1); //Направляем влево
                 }
-                rb.velocity = new Vector2(-Speed, rb.velocity.y);
+                rb.velocity = new Vector2(-Speed, rb.velocity.y); //Двигаемся влево 
             }
             else 
             {
-                facingLeft = false;
+                facingLeft = false; //Нужно развернуться 
             }
         }
         else 
