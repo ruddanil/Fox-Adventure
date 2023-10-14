@@ -9,7 +9,7 @@ public class Fall : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player") //При соприкосновении с игроком игра перезапускается
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("GameOver");
         }
     }
 }

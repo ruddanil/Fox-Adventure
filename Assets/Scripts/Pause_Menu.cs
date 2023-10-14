@@ -9,9 +9,9 @@ public class Pause_Menu : MonoBehaviour
 
     public GameObject pauseMenuUI;
 
-    void Update() //Обновляется при каждом новом кадре
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) //Постановка на паузу при нажатии Esc
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameIsPaused)
             {

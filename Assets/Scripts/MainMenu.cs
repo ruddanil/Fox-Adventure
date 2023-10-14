@@ -6,9 +6,12 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public bool isOpened = false;
+	public bool settingsOpened = false;
+    
+    [SerializeField] public GameObject objPrefab;
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("Intro");
     }
 
     void Update()
@@ -17,6 +20,27 @@ public class MainMenu : MonoBehaviour
         {
             SceneManager.LoadScene("MainMenu");
         }
+
+        if (Input.GetMouseButtonDown(0) && settingsOpened)
+        {
+            objPrefab.SetActive(false);
+            settingsOpened = false;
+        }
+    }
+
+    public void OpenSettings()
+    {
+        Debug.Log("Settings");
+		if (settingsOpened)
+        {
+            objPrefab.SetActive(false);
+			settingsOpened = false;
+		}
+		else
+        {
+            objPrefab.SetActive(true);
+			settingsOpened = true;
+		}
     }
 
     public void QuitGame()
@@ -24,4 +48,5 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quit");
         Application.Quit();
     }
+
 }

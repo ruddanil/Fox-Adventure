@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -9,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Collider2D coll;
 
-    private enum State {idle, running, jumping, falling, hurt} //Типы 
+    private enum State {idle, running, jumping, falling, hurt} 
     private State state = State.idle;
 
     [SerializeField] private LayerMask ground; 
@@ -20,6 +21,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Text gemText;
     [SerializeField] private Text oposText;
     [SerializeField] private float hurtForce = 10f;
+    [SerializeField] private int health = 3;
+    [SerializeField] private int numOfHearth = 3;
+    [SerializeField] private Image[] hearts;
+    [SerializeField] private Sprite fullHeart;
+    [SerializeField] private Sprite emptyHeart;
+    [SerializeField] private AudioClip damageAudio;
+    [SerializeField] private AudioClip killAudio;
+    [SerializeField] private AudioClip gemAudio;
+    [SerializeField] private AudioSource damageAudioSource;
 
     private void Start()
     {
@@ -30,7 +40,19 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(state != State.hurt) //Если персонаж не в анимации после получения урона - движения разблокированы
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (i < health)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+        }
+
+        if (state != State.hurt) //Если персонаж не в анимации после получения урона - движения разблокированы
         {
             Movement();
         }
@@ -42,6 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.tag == "Collectable") //"Сбор" гемов 
         {
+            damageAudioSource.PlayOneShot(gemAudio);
             Destroy(collision.gameObject);
             scoreGem += 1;
             gemText.text = scoreGem.ToString();
@@ -54,12 +77,19 @@ public class PlayerController : MonoBehaviour
         {
             if(state == State.falling) //Если соприкосновение произошло в прыжке - враг уничтожается 
             {
+                damageAudioSource.PlayOneShot(killAudio);
                 Destroy(other.gameObject);
                 scoreOpos += 1;
                 oposText.text = scoreOpos.ToString();
             }
             else //Иначе игрок получает "урон"
             {
+                health -= 1;
+                damageAudioSource.PlayOneShot(damageAudio);
+                if (health < 1)
+                {
+                    SceneManager.LoadScene("GameOver");
+                }
                 state = State.hurt;
                 if(other.gameObject.transform.position.x > transform.position.x) // Враг справа, откидывает влево
                 {
@@ -69,6 +99,8 @@ public class PlayerController : MonoBehaviour
                 {
                     rb.velocity = new Vector2(hurtForce, rb.velocity.y); // Враг слева, откидывает вправо
                 }
+
+                
             }
         }
     }
